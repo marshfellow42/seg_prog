@@ -53,6 +53,9 @@ for user in dictionary:
     if data["success"] == 1:
       print("Quebrado com successo!")
       break
+  else:
+    continue
+  break
 ```
 
 Nesse caso ele utiliza um ataque de dicionário para não gastar tanto tempo testando letra por letra até algo dar certo.

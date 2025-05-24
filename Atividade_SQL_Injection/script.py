@@ -17,3 +17,6 @@ for user in dictionary:
     if data["success"] == 1:
       print("Quebrado com successo!")
       break
+  else:
+    continue
+  break
