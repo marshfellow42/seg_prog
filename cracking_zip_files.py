@@ -32,7 +32,7 @@ if current_platform == "win32":
             os.chdir(john_the_ripper_folder[0])
 
     with open('hashfile', 'w') as outfile:
-        subprocess.run(['./run/zip2john.exe', file_name], stdout=outfile)
+        subprocess.run(['./run/zip2john.exe', file_name], stdout=outfile, stderr=subprocess.DEVNULL)
 
     folder_path = Path('../SecLists/Passwords')
     found_1g = False
@@ -52,7 +52,11 @@ if current_platform == "win32":
             previous_line = ""
 
             for line in process.stdout:
-                print(line, end='')
+#                print(line, end='')
+
+                if "No password hashes loaded" in line:
+                    print("No file has been found.")
+                    sys.exit(0)
 
                 if "No password hashes left to crack" in line:
                     process.terminate()
@@ -73,12 +77,12 @@ if current_platform == "win32":
                                 break
                     else:
                         print("No output received from john --show.")
-                    print("Exiting.")
+#                    print("Exiting.")
                     sys.exit(0)
 
                 if line.startswith('1g ') or line.startswith('1g:') or line.startswith('1g\t'):
                     password_line = previous_line.strip()
-                    print("Detected password line starting with '1g', stopping.")
+#                    print("Detected password line starting with '1g', stopping.")
                     process.terminate()
                     found_1g = True
                     break
@@ -105,7 +109,11 @@ if current_platform == "win32":
         )
 
         for line in process.stdout:
-            print(line, end='')
+#            print(line, end='')
+
+            if "No password hashes loaded" in line:
+                print("No file has been found.")
+                sys.exit(0)
 
             if "No password hashes left to crack" in line:
                 process.terminate()
@@ -125,7 +133,7 @@ if current_platform == "win32":
                             break
                 else:
                     print("No output received from john --show.")
-                print("Exiting.")
+#                print("Exiting.")
                 sys.exit(0)
 
         process.wait()
