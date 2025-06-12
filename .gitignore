@@ -1,3 +1,4 @@
 SecLists/
 john*-win64*/
-*.zip
+/*.zip
+/*.txt
